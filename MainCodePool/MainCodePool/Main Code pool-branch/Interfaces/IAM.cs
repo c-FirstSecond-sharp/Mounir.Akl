@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Interfaces
 {
-    public interface IAM<T> : IEquatable<AM<T>>, IComparer<T> // : IGetAbel
-	{
+    public interface IAM<T> : IEquatable<AM<T>>, IComparer<T> where T : class
+    {
 		void Set(T value);
+
 	}
 }

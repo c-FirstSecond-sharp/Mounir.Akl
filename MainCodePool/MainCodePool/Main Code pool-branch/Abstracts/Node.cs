@@ -15,10 +15,10 @@ namespace ComdepConfig.Main_Code_Pool.Abstracts
         //public Node(Node next) { m_next = next; }
 
         public abstract One ConstructOne(Node other);
-        public abstract One ConstructOne<TFirst>(Node<TFirst> other);
+        public abstract One ConstructOne<TFirst>(Node<TFirst> other) where TFirst : class;
        
     }
-    public class Node<T> : Node
+    public class Node<T> : Node where T : class
     {
         private AM<T> m_data;
         public AM<T> Data { get { return m_data; } }

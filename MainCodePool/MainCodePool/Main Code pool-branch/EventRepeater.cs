@@ -4,14 +4,16 @@ using System.Text;
 using Interfaces;
 using Patterns;
 using Abstracts;
+using KeyClick.Main_Code_pool_branch;
+
 namespace Singleton
-{  
-    public class EventRepeater<T> : AConstructable<T>, IEventRepeater<T>, IDisposable
-	{
-		public AM<EventHandler> Act;
-		public delegate void EventHandler(T sender, T e);
+{
+    public class EventRepeater<T> : Construct, IEventRepeater<T>, IDisposable where T : class
+    {
+		public AM<System.EventHandler> Act;
+		//public delegate void EventHandler(AM<T> sender, AM<T> e);
 		event EventHandler Changed;
-		public void Raise(T sender, T e)
+		public void Raise(T sender, EventArgs e)
 		{
 			Changed+=new EventHandler(Changed_State);
 			if (Changed != null)
@@ -21,47 +23,52 @@ namespace Singleton
 		}
 		protected internal void Subscribe()
 		{
-			if(Act==null)
-				Act = new AM<EventHandler>();
+            if (this.IsNull(Act) == true)
+            {
+                Act = new AM<System.EventHandler>();
+                Act.Set(new EventHandler(FirstAction));
+            }
 		}
-		virtual public void Changed_State(T sender, T e)
+		virtual public void Changed_State(object sender, EventArgs e)
 		{
 			AM<T> s = null;
 			AM<T> ee = null;
 			if (sender is AM<T>)
 				s = sender as AM<T>;
-			else s =new  AM<T>(sender);
+			//else s =new  AM<T>(sender);
 			if (e is AM<T>)
 				ee = e as AM<T>;
-			else ee = new AM<T>(e);
-			if (Act.Get() != null)
+			//else ee = new AM<T>(e);
+			if (IsNull( Act) == false)
 				Act.Get()(s, ee);
 
 		}
 
+      virtual internal  void FirstAction(object sender, EventArgs e)
+        {
 
+        }
+        //public override void Init<T>(T obj)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        protected internal override void Construct(T obj)
+        public override void Init()
         {
             throw new NotImplementedException();
         }
 
-        public override void Construct()
+        public override AM<TFirst> ConstructOne<TFirst>(AConstruct other)
         {
             throw new NotImplementedException();
         }
 
-        public override AM<TFirst> ConstructOne<TFirst>(AConstructable<TFirst> other)
+        public override IConstruct Get()
         {
-            throw new NotImplementedException();
+            return this;
         }
 
-        public override IConstructable Get()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override AM<TFirst> GetOne<TFirst>(AConstructable<TFirst> other)
+        public override AM<TFirst> GetOne<TFirst>(AConstruct other)
         {
             throw new NotImplementedException();
         }
@@ -71,10 +78,7 @@ namespace Singleton
             throw new NotImplementedException();
         }
 
-        //public override TInnerContent GetSelected<TInnerContent>()  
-        //{
-        //    throw new NotImplementedException();
-        //}
+        
 
         public override TInnerContent GetSelectedItem<TInnerContent>()
         {
@@ -97,33 +101,82 @@ namespace Singleton
             Dispose(true);
         }
 
-        public override int IdSelected
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //public override int IdSelected
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //    set
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
-        public override Guid GuidSelected
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //public override Guid GuidSelected
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //    set
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
         public override string GetKey()
         {
             throw new NotImplementedException();
         }
+
+        public override IConstruct DeepCopy()
+        {
+            throw new NotImplementedException();
+        }
+        //public override void Set<U>(U uIType)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public override void Set<B, T>(AMNamed<B, Construct, T> uIType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsNull(IConstruct am)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public override AM<string> Name
+        //{
+        //    get
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    set
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
+        public override Type ContentType()
+        {
+            throw new NotImplementedException();
+        }
+        public override bool IsSubclass(Type t)
+        {
+            throw new NotImplementedException();
+        }
+        public override bool Is(Type t)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public override void Set<T>(T aPanel)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

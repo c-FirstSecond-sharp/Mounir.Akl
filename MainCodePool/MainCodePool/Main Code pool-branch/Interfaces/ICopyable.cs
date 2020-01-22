@@ -6,6 +6,6 @@ namespace Interfaces
 {
 	 interface ICopyable
 	{
-		IConstructable Copy();
+		 IConstruct Copy();
 	}
 }
